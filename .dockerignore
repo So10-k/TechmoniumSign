@@ -1,0 +1,12 @@
+.git
+.github
+.husky
+**/node_modules
+**/build
+**/coverage
+**/.cache
+*.log
+.env
+.env.*
+cert
+
