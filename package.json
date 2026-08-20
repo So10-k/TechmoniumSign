@@ -1,5 +1,5 @@
 {
-  "name": "opensign",
+  "name": "techmoniumsign",
   "version": "1.0.6",
   "description": "Free and open source alternative to DocuSign",
   "main": "index.js",
