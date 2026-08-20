@@ -30,8 +30,8 @@ const AppLoader = () => {
 };
 function Opensigndrive() {
   const appName =
-    "OpenSign™";
-  const drivename = appName === "OpenSign™" ? "OpenSign™" : "";
+    "techmoniumsign";
+  const drivename = appName === "techmoniumsign" ? "techmoniumsign" : "";
   const { t } = useTranslation();
   const navigate = useNavigate();
   const scrollRef = useRef(null);
@@ -209,7 +209,7 @@ function Opensigndrive() {
       }
       if (!docId) {
         setFolderName([
-          { name: t("OpenSign-drive", { appName: drivename }), objectId: "" }
+          { name: t("techmoniumsign-drive", { appName: drivename }), objectId: "" }
         ]);
       }
     } catch (e) {
