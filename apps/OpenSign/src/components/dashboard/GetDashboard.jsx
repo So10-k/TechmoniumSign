@@ -1,4 +1,4 @@
-import { useState, useEffect, Suspense } from "react";
+import { Suspense } from "react";
 import { lazyWithRetry } from "../../utils";
 import { useTranslation } from "react-i18next";
 const DashboardButton = lazyWithRetry(() => import("./DashboardButton"));
@@ -33,9 +33,7 @@ const GetDashboard = (props) => {
       case "Card":
         return (
           <div
-            className={`${
-              col?.widget?.bgColor ? col.widget.bgColor : "bg-[#2ed8b6]"
-            } op-card w-full h-[140px] px-3 pt-4 mb-3 shadow-md`}
+            className="tm-stat-card"
             data-tut={col.widget.data.tourSection}
           >
             <Suspense
@@ -77,9 +75,7 @@ const GetDashboard = (props) => {
       case "Card":
         return (
           <div
-            className={`${
-              col?.widget?.bgColor ? col.widget.bgColor : "bg-[#2ed8b6]"
-            } op-card w-full h-[140px] px-3 pt-4 mb-3 shadow-md"`}
+            className="tm-stat-card"
           >
             <Suspense fallback={<div>please wait</div>}>
               <DashboardCard
@@ -108,11 +104,18 @@ const GetDashboard = (props) => {
     }
   };
   return (
-    <div>
-      <div className="mb-3">
+    <div className="tm-dashboard">
+      <header className="tm-page-heading">
+        <div>
+          <span className="tm-page-eyebrow">Workspace</span>
+          <h1>Documents</h1>
+          <p>Prepare an agreement, request signatures, and follow every document through completion.</p>
+        </div>
+      </header>
+      <section className="tm-dashboard-actions" aria-label="Document actions">
         <div
           data-tut={"tourbutton"}
-          className="flex flex-col md:flex-row gap-4"
+          className="grid grid-cols-1 md:grid-cols-2 gap-3"
         >
           {buttonList.map((btn) => (
             <Button
@@ -124,8 +127,8 @@ const GetDashboard = (props) => {
             />
           ))}
         </div>
-      </div>
-      <div className="grid grid-cols-12 w-full gap-x-4">
+      </section>
+      <div className="tm-dashboard-grid grid grid-cols-12 w-full gap-4">
         {props?.dashboard?.columns?.map((col, i) =>
           col.widget.data && col.widget.data.tourSection ? (
             <div key={i} className={col?.colsize}>

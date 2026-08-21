@@ -314,34 +314,35 @@ const DashboardCard = (props) => {
   return (
     <div
       onClick={() => openReport()}
-      className={`${
+      className={`tm-stat-content ${
         props.Data && props.Data.Redirect_type
           ? "cursor-pointer"
           : "cursor-default"
       }`}
     >
-      <div className="flex items-center justify-start gap-5 text-white">
-        <span className="rounded-full bg-base-300 bg-opacity-20 w-[60px] h-[60px] self-start flex justify-center items-center">
+      <div className="tm-stat-main">
+        <span className="tm-stat-icon">
           <i
             className={`${
               props.Icon ? props.Icon : "fa-light fa-info"
-            } text-[25px] lg:text-[30px]`}
+            }`}
+            aria-hidden="true"
           ></i>
         </span>
 
-        <div className="font-medium">
-          <div className="text-base lg:text-lg">
+        <div className="tm-stat-copy">
+          <div className="tm-stat-label">
             {t(`dashboard-card.${props.Label}`)}
           </div>
-          <div className="text-2xl font-light">
+          <div className="tm-stat-value">
             {loading ? <div className="loader-01"></div> : setFormat(response)}
           </div>
         </div>
       </div>
-      <div className="text-xs absolute top-3 right-2">
+      <div className="tm-stat-help">
         <Tooltip
           id={props.Label}
-          iconColor={"white"}
+          iconColor={"#686d76"}
           message={t(`tour-mssg.${props.Label}`)}
         />
       </div>
