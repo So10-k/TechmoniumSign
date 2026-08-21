@@ -225,6 +225,9 @@ export default function reportJson(id, currentUserId) {
           'SendinOrder',
           'SignatureType',
           'NotifyOnSignatures',
+          'IsGlobal',
+          'GlobalTemplateSlug',
+          'Category',
         ],
       };
     default:

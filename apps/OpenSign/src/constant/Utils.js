@@ -1003,17 +1003,21 @@ export const createDocument = async (
     const Doc = template[0];
     const date = new Date();
     const isoDate = date.toISOString();
-    let extUserId = Doc.ExtUserPtr.objectId;
-    let creatorId = Doc.CreatedBy.objectId;
     const Extand_Class = localStorage.getItem("Extand_Class");
     const extClass = Extand_Class && JSON.parse(Extand_Class);
+    let extUserId = Doc.ExtUserPtr?.objectId || extClass?.[0]?.objectId;
+    let creatorId = Doc.CreatedBy?.objectId || extClass?.[0]?.UserId?.objectId;
     if (extClass && extClass.length > 0) {
-      if (Doc.ExtUserPtr?.objectId !== extClass?.[0]?.objectId) {
-        if (extClass && extClass.length > 0) {
-          extUserId = extClass[0].objectId;
-          creatorId = extClass[0]?.UserId.objectId;
-        }
+      if (
+        Doc.IsGlobal ||
+        Doc.ExtUserPtr?.objectId !== extClass?.[0]?.objectId
+      ) {
+        extUserId = extClass[0].objectId;
+        creatorId = extClass[0]?.UserId?.objectId;
       }
+    }
+    if (!extUserId || !creatorId) {
+      return { status: "error", id: "user-not-exist" };
     }
     let placeholdersArr = [];
     if (placeholders?.length > 0) {

@@ -42,30 +42,28 @@ export default async function getReport(request) {
         extUserQuery.include('TeamIds');
         const extUser = await extUserQuery.first({ useMasterKey: true });
         const userPtr = { __type: 'Pointer', className: '_User', objectId: userId };
-        if (!extUser) {
-          paramsObj = { ...paramsObj, CreatedBy: userPtr };
-        }
-        const _extUser = JSON.parse(JSON.stringify(extUser));
-        const extPtr = { __type: 'Pointer', className: 'contracts_Users', objectId: extUser.id };
-        if (_extUser?.TeamIds && _extUser.TeamIds?.length > 0) {
+        const accessFilters = [{ CreatedBy: userPtr }, { IsGlobal: true }];
+
+        if (extUser) {
+          const _extUser = JSON.parse(JSON.stringify(extUser));
+          const extPtr = {
+            __type: 'Pointer',
+            className: 'contracts_Users',
+            objectId: extUser.id,
+          };
+          accessFilters.push({ ExtUserPtr: extPtr }, { SharedWithUsers: extPtr });
+
           // Collect ancestors efficiently + de-dupe
           const teamSet = new Set();
-          for (const team of _extUser?.TeamIds) {
+          for (const team of _extUser?.TeamIds || []) {
             const ancestors = team.Ancestors || [];
             for (const a of ancestors) teamSet.add(a);
           }
           const teamArr = [...teamSet];
-          paramsObj = {
-            ...paramsObj,
-            $or: [
-              { SharedWith: { $in: teamArr } },
-              { ExtUserPtr: extPtr },
-              { SharedWithUsers: extPtr },
-            ],
-          };
-        } else {
-          paramsObj = { ...paramsObj, CreatedBy: userPtr };
+          if (teamArr.length > 0) accessFilters.push({ SharedWith: { $in: teamArr } });
         }
+
+        paramsObj = { ...paramsObj, $or: accessFilters };
       }
       paramsObj = applySearch({ reportId, baseWhere: paramsObj, searchTerm });
 
