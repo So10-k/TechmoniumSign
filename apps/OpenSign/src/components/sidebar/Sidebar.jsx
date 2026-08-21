@@ -10,6 +10,7 @@ import {
   setSelectedMenu,
   toggleSidebar
 } from "../../redux/reducers/sidebarReducer";
+import { getSidebarStateClass } from "./sidebarState";
 
 const Sidebar = () => {
   const { width } = useWindowSize();
@@ -76,8 +77,9 @@ const Sidebar = () => {
   };
   return (
     <aside
-      className={`tm-sidebar absolute max-lg:min-h-screen lg:relative overflow-y-auto transition-all z-[500] hide-scrollbar
-     ${isOpen ? "w-full md:w-64" : "w-0"}`}
+      className={`tm-sidebar ${getSidebarStateClass(isOpen)} absolute max-lg:min-h-screen lg:relative z-[500] hide-scrollbar`}
+      data-state={isOpen ? "open" : "closed"}
+      aria-hidden={!isOpen}
     >
       <div className="tm-sidebar-workspace">
         <div className="tm-sidebar-workspace-mark" aria-hidden="true">

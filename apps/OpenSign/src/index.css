@@ -429,11 +429,33 @@ body {
 
 .tm-sidebar {
   display: flex;
+  width: 0;
+  min-width: 0;
+  flex: 0 0 0;
   flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: auto;
   border-right: 1px solid var(--tm-line);
   background: #f0f0eb;
   box-shadow: none;
   color: var(--tm-ink);
+  opacity: 0;
+  transition: width 220ms ease, flex-basis 220ms ease, opacity 140ms ease;
+}
+
+.tm-sidebar-open {
+  width: 16rem;
+  flex-basis: 16rem;
+  opacity: 1;
+}
+
+.tm-sidebar-closed {
+  width: 0;
+  flex-basis: 0;
+  overflow: hidden;
+  border-right-color: transparent;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .tm-sidebar-workspace {
@@ -617,9 +639,14 @@ body {
     display: grid;
   }
 
-  .tm-sidebar {
+  .tm-sidebar-open {
     width: min(88vw, 19rem);
     box-shadow: 16px 0 40px rgba(23, 25, 31, 0.18);
+  }
+
+  .tm-sidebar-closed {
+    width: 0;
+    box-shadow: none;
   }
 
   .tm-workspace {
