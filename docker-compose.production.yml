@@ -81,4 +81,3 @@ volumes:
     name: techmoniumsign-mongo-data
   files-data:
     name: techmoniumsign-files-data
-
