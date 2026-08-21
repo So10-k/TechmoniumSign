@@ -1,9 +1,343 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --tm-ink: #17191f;
+  --tm-muted: #686d76;
+  --tm-canvas: #f5f5f1;
+  --tm-surface: #ffffff;
+  --tm-line: #dedfd9;
+  --tm-accent: #d7f56f;
+  --tm-accent-strong: #b8df38;
+  --tm-focus: #4b65d1;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
 body {
-  background-color: white;
+  background-color: var(--tm-canvas);
+  color: var(--tm-ink);
+  font-family: "Manrope", "Segoe UI", sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+.tm-wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: var(--tm-ink);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  white-space: nowrap;
+}
+
+.tm-wordmark-mark {
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  border-radius: 0.55rem;
+  background: var(--tm-ink);
+  color: var(--tm-accent);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.tm-wordmark-name strong {
+  font-weight: 700;
+}
+
+.tm-wordmark-inverse {
+  color: #ffffff;
+}
+
+.tm-wordmark-inverse .tm-wordmark-mark {
+  background: var(--tm-accent);
+  color: var(--tm-ink);
+}
+
+.tm-wordmark-compact .tm-wordmark-name {
+  display: none;
+}
+
+.tm-login-shell {
+  display: grid;
+  min-height: 100vh;
+  grid-template-columns: minmax(0, 1.05fr) minmax(28rem, 0.95fr);
+  background: var(--tm-surface);
+}
+
+.tm-login-main {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: 1.5rem clamp(1.5rem, 5vw, 5.5rem) 2rem;
+}
+
+.tm-login-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tm-login-topbar .op-select {
+  min-height: 2.5rem;
+  border-color: var(--tm-line);
+  background: transparent;
+  font-size: 0.8rem;
+}
+
+.tm-login-panel {
+  width: min(100%, 28rem);
+  margin: auto;
+  padding: 4rem 0;
+}
+
+.tm-eyebrow {
+  margin: 0 0 1rem;
+  color: var(--tm-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.tm-login-panel h1 {
+  margin: 0;
+  color: var(--tm-ink);
+  font-size: clamp(2.35rem, 5vw, 3.65rem);
+  font-weight: 600;
+  letter-spacing: -0.055em;
+  line-height: 1;
+  text-wrap: balance;
+}
+
+.tm-login-intro {
+  max-width: 40ch;
+  margin: 1.25rem 0 2.25rem;
+  color: var(--tm-muted);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.tm-login-form fieldset {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.tm-field-group {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.tm-field-group label,
+.tm-field-label-row {
+  color: var(--tm-ink);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.tm-field-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tm-input.op-input {
+  width: 100%;
+  height: 3.15rem;
+  border: 1px solid #c9cbc5;
+  border-radius: 0.7rem;
+  background: #fff;
+  color: var(--tm-ink);
+  font-size: 1rem;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.tm-input.op-input:focus-visible {
+  border-color: var(--tm-focus);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(75, 101, 209, 0.14);
+}
+
+.tm-text-link {
+  color: #3e55ae;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.tm-text-link:hover,
+.tm-text-link:visited {
+  color: #2b3e91;
+  text-decoration: underline;
+}
+
+.tm-password-field {
+  position: relative;
+}
+
+.tm-password-field .tm-input {
+  padding-right: 3.25rem;
+}
+
+.tm-password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 0.4rem;
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  transform: translateY(-50%);
+  place-items: center;
+  border: 0;
+  border-radius: 0.55rem;
+  background: transparent;
+  color: var(--tm-muted);
+}
+
+.tm-password-toggle:hover {
+  background: var(--tm-canvas);
+  color: var(--tm-ink);
+}
+
+.tm-primary-button.op-btn {
+  width: 100%;
+  min-height: 3.2rem;
+  margin-top: 1.5rem;
+  justify-content: space-between;
+  border: 1px solid var(--tm-ink);
+  border-radius: 0.7rem;
+  background: var(--tm-ink);
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: none;
+  transition: transform 160ms ease, background-color 160ms ease;
+}
+
+.tm-primary-button.op-btn:hover {
+  transform: translateY(-1px);
+  border-color: #2a2d34;
+  background: #2a2d34;
+}
+
+.tm-login-security {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 1.5rem 0 0;
+  color: var(--tm-muted);
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+.tm-login-story {
+  display: flex;
+  min-height: 100%;
+  align-items: flex-end;
+  overflow: hidden;
+  background: var(--tm-ink);
+  color: #ffffff;
+}
+
+.tm-login-story-inner {
+  width: min(100%, 38rem);
+  padding: clamp(3rem, 7vw, 7rem);
+}
+
+.tm-eyebrow-light {
+  color: var(--tm-accent);
+}
+
+.tm-login-story h2 {
+  max-width: 10ch;
+  margin: 0;
+  font-size: clamp(2.5rem, 5vw, 4.8rem);
+  font-weight: 500;
+  letter-spacing: -0.06em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+.tm-login-story-inner > p:not(.tm-eyebrow) {
+  max-width: 43ch;
+  margin: 1.5rem 0 0;
+  color: #b8bbc2;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.tm-login-steps {
+  display: grid;
+  margin: 3rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tm-login-steps li {
+  display: grid;
+  grid-template-columns: 2rem 7rem minmax(0, 1fr);
+  align-items: baseline;
+  gap: 0.8rem;
+  padding: 1rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.tm-login-steps span,
+.tm-login-steps small {
+  color: #969aa3;
+  font-size: 0.72rem;
+}
+
+.tm-login-steps strong {
+  color: #ffffff;
+  font-size: 0.86rem;
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .tm-login-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .tm-login-story {
+    display: none;
+  }
+}
+
+@media (max-width: 540px) {
+  .tm-login-main {
+    padding: 1rem 1.25rem 1.5rem;
+  }
+
+  .tm-login-topbar .op-select {
+    width: 8rem;
+  }
+
+  .tm-login-panel {
+    padding: 3rem 0 2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }
 
 /* Custom CSS to hide scrollbar */

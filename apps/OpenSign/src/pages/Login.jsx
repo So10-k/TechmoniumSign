@@ -3,8 +3,6 @@ import Parse from "parse";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import { NavLink, useNavigate, useLocation } from "react-router";
-import login_img from "../assets/images/login_img.svg";
-import { useWindowSize } from "../hook/useWindowSize";
 import ModalUi from "../primitives/ModalUi";
 import {
   emailRegex,
@@ -21,6 +19,7 @@ import {
 import Loader from "../primitives/Loader";
 import { useTranslation } from "react-i18next";
 import SelectLanguage from "../components/pdf/SelectLanguage";
+import BrandWordmark from "../components/BrandWordmark";
 
 function Login() {
   const appName =
@@ -29,7 +28,6 @@ function Login() {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-  const { width } = useWindowSize();
   const [state, setState] = useState({
     email: "",
     password: "",
@@ -44,7 +42,6 @@ function Login() {
     Destination: ""
   });
   const [isModal, setIsModal] = useState(false);
-  const [image, setImage] = useState();
   const [errMsg, setErrMsg] = useState();
   useEffect(() => {
     handleUserExist();
@@ -80,11 +77,6 @@ function Login() {
       app?.user === "not_exist"
     ) {
       navigate("/addadmin");
-    }
-    if (app?.logo) {
-      setImage(app?.logo);
-    } else {
-      setImage(appInfo?.applogo || undefined);
     }
     dispatch(fetchAppInfo());
     if (localStorage.getItem("accesstoken")) {
@@ -423,116 +415,92 @@ function Login() {
       )}
       {appInfo && appInfo.appId ? (
         <>
-          <div
-            aria-labelledby="loginHeading"
-            role="region"
-            className="pb-1 md:pb-4 pt-10 md:px-10 lg:px-16 h-full"
-          >
-            <div className="md:p-4 lg:p-10 p-4 bg-base-100 text-base-content op-card">
-              <div className="w-[250px] h-[66px] inline-block overflow-hidden">
-                {image && (
-                  <img
-                    src={image}
-                    className="object-contain h-full"
-                    alt="applogo"
-                  />
-                )}
+          <div aria-labelledby="loginHeading" role="region" className="tm-login-shell">
+            <section className="tm-login-main">
+              <div className="tm-login-topbar">
+                <BrandWordmark />
+                <SelectLanguage isProfile />
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-2">
-                <div>
-                  <form onSubmit={handleLoginBtn} aria-label="Login Form">
-                    <h1 className="text-[30px] mt-6">{t("welcome")}</h1>
-                    <fieldset>
-                      <legend className="text-[12px] text-[#878787]">
-                        {t("Login-to-your-account")}
-                      </legend>
-                      <div className="w-full px-6 py-3 my-1 op-card bg-base-100 shadow-md outline outline-1 outline-slate-300/50">
-                        <label className="block text-xs" htmlFor="email">
-                          {t("email")}
-                        </label>
-                        <input
-                          id="email"
-                          type="email"
-                          className="op-input op-input-bordered op-input-sm focus:outline-none hover:border-base-content w-full text-xs"
-                          name="email"
-                          autoComplete="username"
-                          value={state.email}
-                          onChange={handleChange}
-                          required
-                          onInvalid={(e) =>
-                            e.target.setCustomValidity(t("input-required"))
-                          }
-                          onInput={(e) => e.target.setCustomValidity("")}
-                        />
-                        <hr className="my-1 border-none" />
-                            <label className="block text-xs" htmlFor="password">
-                              {t("password")}
-                            </label>
-                            <div className="relative">
-                              <input
-                                id="password"
-                                type={
-                                  state.passwordVisible ? "text" : "password"
-                                }
-                                className="op-input op-input-bordered op-input-sm focus:outline-none hover:border-base-content w-full text-xs"
-                                name="password"
-                                value={state.password}
-                                autoComplete="current-password"
-                                onChange={handleChange}
-                                onInvalid={(e) =>
-                                  e.target.setCustomValidity(
-                                    t("input-required")
-                                  )
-                                }
-                                onInput={(e) => e.target.setCustomValidity("")}
-                                required
-                              />
-                              <span
-                                className="absolute cursor-pointer top-[50%] right-[10px] -translate-y-[50%] text-base-content"
-                                onClick={togglePasswordVisibility}
-                              >
-                                {state.passwordVisible ? (
-                                  <i className="fa-light fa-eye-slash text-xs pb-1" /> // Close eye icon
-                                ) : (
-                                  <i className="fa-light fa-eye text-xs pb-1 " /> // Open eye icon
-                                )}
-                              </span>
-                            </div>
-                          <div className="relative mt-1">
-                            <NavLink
-                              to="/forgetpassword"
-                              className="text-[13px] op-link op-link-primary underline-offset-1 focus:outline-none ml-1"
-                            >
-                              {t("forgot-password")}?
-                            </NavLink>
-                          </div>
-                      </div>
-                    </fieldset>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-center text-xs font-bold mt-2">
-                      <button
-                        type="submit"
-                        className="op-btn op-btn-primary"
-                        disabled={state.loading}
-                      >
-                        {state.loading ? t("loading") : t("login")}
-                      </button>
-                    </div>
-                  </form>
-                </div>
-                {width >= 768 && (
-                  <div className="place-self-center">
-                    <div className="mx-auto md:w-[300px] lg:w-[400px] xl:w-[500px]">
-                      <img
-                        src={login_img}
-                        alt="The image illustrates a person from behind, seated at a desk with a four-monitor computer setup, in an environment with a light blue and white color scheme, featuring a potted plant to the right."
-                        width="100%"
+              <div className="tm-login-panel">
+                <p className="tm-eyebrow">Secure document workflows</p>
+                <h1 id="loginHeading">Welcome back</h1>
+                <p className="tm-login-intro">
+                  Sign in to prepare, send, and track agreements from one focused workspace.
+                </p>
+                <form onSubmit={handleLoginBtn} aria-label="Login Form" className="tm-login-form">
+                  <fieldset>
+                    <legend className="sr-only">{t("Login-to-your-account")}</legend>
+                    <div className="tm-field-group">
+                      <label htmlFor="email">{t("email")}</label>
+                      <input
+                        id="email"
+                        type="email"
+                        className="op-input op-input-bordered tm-input"
+                        name="email"
+                        autoComplete="username"
+                        value={state.email}
+                        onChange={handleChange}
+                        required
+                        onInvalid={(e) => e.target.setCustomValidity(t("input-required"))}
+                        onInput={(e) => e.target.setCustomValidity("")}
                       />
                     </div>
-                  </div>
-                )}
+                    <div className="tm-field-group">
+                      <div className="tm-field-label-row">
+                        <label htmlFor="password">{t("password")}</label>
+                        <NavLink to="/forgetpassword" className="tm-text-link">
+                          {t("forgot-password")}?
+                        </NavLink>
+                      </div>
+                      <div className="tm-password-field">
+                        <input
+                          id="password"
+                          type={state.passwordVisible ? "text" : "password"}
+                          className="op-input op-input-bordered tm-input"
+                          name="password"
+                          value={state.password}
+                          autoComplete="current-password"
+                          onChange={handleChange}
+                          onInvalid={(e) => e.target.setCustomValidity(t("input-required"))}
+                          onInput={(e) => e.target.setCustomValidity("")}
+                          required
+                        />
+                        <button
+                          type="button"
+                          className="tm-password-toggle"
+                          onClick={togglePasswordVisibility}
+                          aria-label={state.passwordVisible ? "Hide password" : "Show password"}
+                        >
+                          <i className={`fa-light ${state.passwordVisible ? "fa-eye-slash" : "fa-eye"}`} />
+                        </button>
+                      </div>
+                    </div>
+                  </fieldset>
+                  <button type="submit" className="op-btn tm-primary-button" disabled={state.loading}>
+                    {state.loading ? t("loading") : t("login")}
+                    <i className="fa-light fa-arrow-right" aria-hidden="true" />
+                  </button>
+                </form>
+                <p className="tm-login-security">
+                  <i className="fa-light fa-shield-check" aria-hidden="true" />
+                  Encrypted document storage and tamper-evident activity history.
+                </p>
               </div>
-            </div>
-            <SelectLanguage />
+            </section>
+            <aside className="tm-login-story" aria-label="Techmonium Sign workflow">
+              <div className="tm-login-story-inner">
+                <p className="tm-eyebrow tm-eyebrow-light">One workspace. Clear progress.</p>
+                <h2>Move agreements from draft to done.</h2>
+                <p>
+                  Reusable templates, clear signer status, and a complete record of every action.
+                </p>
+                <ol className="tm-login-steps">
+                  <li><span>01</span><strong>Prepare</strong><small>Start from a template or upload a PDF.</small></li>
+                  <li><span>02</span><strong>Send</strong><small>Assign fields and request signatures.</small></li>
+                  <li><span>03</span><strong>Complete</strong><small>Track progress and store the signed record.</small></li>
+                </ol>
+              </div>
+            </aside>
             {state.alertMsg && (
               <Alert type={state.alertType}>{state.alertMsg}</Alert>
             )}
