@@ -1067,13 +1067,13 @@ const TemplatesReport = (props) => {
     setObjInfoModal({ title, info });
   };
   return (
-    <div className="relative">
+    <div className="relative tm-report">
       {Object.keys(actLoader)?.length > 0 && (
         <div className="absolute w-full h-full flex justify-center items-center bg-black/30 rounded-box z-30">
           <Loader />
         </div>
       )}
-      <div className="p-2 w-full bg-base-100 text-base-content op-card shadow-lg">
+      <div className="tm-report-surface">
         {alertMsg.message && (
           <Alert type={alertMsg.type}>{alertMsg.message}</Alert>
         )}
@@ -1088,15 +1088,23 @@ const TemplatesReport = (props) => {
         )}
         <div
           ref={titleRef}
-          className="flex flex-row items-center justify-between my-2 mx-3 text-[20px] md:text-[23px]"
+          className="tm-report-header"
         >
-          <div className="font-light">
-            {t(`report-name.${props.ReportName}`)}{" "}
-            <sup className="cursor-pointer" onClick={() => setIsTour(true)}>
-              <i className="border-[#33bbff] text-[#33bbff] fa-light fa-question rounded-full border-[1px] py-[1.5px] px-[4px] text-[13px]"></i>
-            </sup>
+          <div className="tm-report-heading-copy">
+            <div className="tm-report-title-row">
+              <h1>{t(`report-name.${props.ReportName}`)}</h1>
+              <button
+                type="button"
+                className="tm-help-button"
+                onClick={() => setIsTour(true)}
+                aria-label="Open template guide"
+              >
+                <i className="fa-light fa-question" aria-hidden="true" />
+              </button>
+            </div>
+            <p>Start from a reusable agreement or create a template for your team.</p>
           </div>
-          <div className="flex flex-row justify-center items-center gap-3 mb-2">
+          <div className="tm-report-tools">
             {/* Search input for report bigger in width */}
             {titleElement?.width > 500 && (
               <div className="flex">
@@ -1106,18 +1114,20 @@ const TemplatesReport = (props) => {
                   onChange={props.handleSearchChange}
                   placeholder={t("search-templates")}
                   onPaste={props.handleSearchPaste}
-                  className="op-input op-input-bordered op-input-sm focus:outline-none hover:border-base-content w-64 text-xs"
+                  className="op-input op-input-bordered tm-report-search"
                 />
               </div>
             )}
             {/* create template form  */}
-            <div
+            <button
+              type="button"
               data-tut="reactourFirst"
-              className="cursor-pointer flex"
+              className="tm-secondary-button"
               onClick={() => navigate("/form/template")}
             >
-              <i className="cursor-pointer fa-light fa-square-plus text-accent text-[30px] md:text-[32px]"></i>
-            </div>
+              <i className="fa-light fa-plus" aria-hidden="true" />
+              <span>New template</span>
+            </button>
             {/* search icon/magnifer icon  */}
             {titleElement?.width < 500 && (
               <button
@@ -1150,12 +1160,12 @@ const TemplatesReport = (props) => {
               onChange={props.handleSearchChange}
               placeholder={t("search-documents")}
               onPaste={props.handleSearchPaste}
-              className="op-input op-input-bordered op-input-sm focus:outline-none hover:border-base-content w-full text-xs"
+              className="op-input op-input-bordered tm-report-search w-full"
             />
           </div>
         )}
         <div
-          className={`overflow-auto w-full border-b ${
+          className={`tm-report-table-wrap overflow-auto w-full ${
             props.List?.length > 0
               ? isDashboard
                 ? "min-h-[317px]"
@@ -1165,9 +1175,9 @@ const TemplatesReport = (props) => {
               : ""
           }`}
         >
-          <table className="op-table border-collapse w-full mb-4">
-            <thead className="text-[14px] text-center">
-              <tr className="border-y-[1px]">
+          <table className="op-table border-collapse w-full tm-report-table">
+            <thead>
+              <tr>
                 {props.heading?.map((item, i) => (
                   <th key={i} className="p-2">
                     {props.columnLabels?.[item] ||
@@ -1181,7 +1191,7 @@ const TemplatesReport = (props) => {
                 )}
               </tr>
             </thead>
-            <tbody className="text-[12px]">
+            <tbody>
               {props.List?.length > 0 &&
                 !props.searchLoader &&
                 currentList.map((item, index) => (
@@ -1190,7 +1200,7 @@ const TemplatesReport = (props) => {
                       currentList?.length === props.docPerPage
                         ? "last:border-none"
                         : ""
-                    } border-y-[1px] `}
+                    }`}
                     key={index}
                   >
                     {props?.heading?.map((col) => (
@@ -1231,7 +1241,7 @@ const TemplatesReport = (props) => {
                                 >
                                   <i className={act.btnIcon}></i>
                                   {act.btnLabel && (
-                                    <span className="uppercase font-medium">
+                                    <span className="font-medium">
                                       {
                                             `${t(`btnLabel.${act.btnLabel}`)}`
                                       }
