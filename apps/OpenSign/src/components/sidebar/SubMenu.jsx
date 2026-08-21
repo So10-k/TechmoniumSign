@@ -14,13 +14,13 @@ const Submenu = ({ item, closeSidebar, toggleSubmenu, submenuOpen }) => {
     <li role="none" className="my-0.5">
       <button
         onClick={() => toggleSubmenu(item.title)}
-        className="flex gap-x-5 items-center justify-start text-left p-3 text-base-content hover:text-base-content focus:bg-base-300 hover:bg-base-300 hover:no-underline focus:outline-none"
+        className="tm-nav-item"
         aria-expanded={submenuOpen}
         aria-haspopup="true"
         aria-controls={`submenu-${title}`}
       >
-        <span className="w-[20px] h-[20px] flex justify-center">
-          <i className={`${icon} text-[20px]`}></i>
+        <span className="tm-nav-icon">
+          <i className={icon}></i>
         </span>
         <div className="flex justify-between items-center w-full">
           <span className="flex items-center mb-0.5">
@@ -47,15 +47,15 @@ const Submenu = ({ item, closeSidebar, toggleSubmenu, submenuOpen }) => {
                     : `/${childItem.objectId}`
                 }
                 className={({ isActive }) =>
-                  `${isActive && selectedMenu ? "bg-base-300 text-base-content" : ""} pl-4 flex items-center gap-x-5 py-2 text-sm cursor-pointer text-base-content hover:text-base-content focus:bg-base-300 hover:bg-base-300 hover:no-underline focus:outline-none`
+                  `${isActive && selectedMenu ? "tm-nav-item-active" : ""} tm-nav-item tm-nav-child`
                 }
                 onClick={() => closeSidebar(childItem.title)}
                 role="menuitem"
                 tabIndex={submenuOpen ? 0 : -1}
               >
-                <span className="w-[18px] h-[18px] flex justify-center">
+                <span className="tm-nav-icon">
                   <i
-                    className={`${childItem.icon} text-[18px]`}
+                    className={childItem.icon}
                     aria-hidden="true"
                   ></i>
                 </span>

@@ -173,7 +173,7 @@ const HomeLayout = () => {
   }
 
   return isValidSession && localStorage.getItem("accesstoken") ? (
-    <div className="flex flex-col h-screen overflow-hidden">
+    <div className="tm-app-shell flex flex-col h-screen overflow-hidden">
       {/* HEADER */}
       <header className="z-[501]">
         {!isLoader && <Header setIsLoggingOut={setIsLoggingOut} />}
@@ -196,11 +196,11 @@ const HomeLayout = () => {
             {/* MAIN (includes both content + footer in one scrollable column) */}
             <main
               id="renderList"
-              className="flex-1 overflow-auto transition-all duration-300 ease-in-out"
+              className="tm-app-main flex-1 overflow-auto transition-all duration-300 ease-in-out"
             >
               <div className="flex flex-col min-h-full">
                 {/* your page content */}
-                <div className="p-3">{<Outlet />}</div>
+                <div className="tm-workspace">{<Outlet />}</div>
                 {/* sticky-but-scrollable footer */}
                 <div className="mt-auto z-30">
                   <Footer />

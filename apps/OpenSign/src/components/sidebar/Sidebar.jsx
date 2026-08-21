@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import Menu from "./Menu";
 import Submenu from "./SubMenu";
-import SocialMedia from "../SocialMedia";
 import dp from "../../assets/images/dp.png";
 import sidebarList, { subSetting } from "../../json/menuJson";
 import { useNavigate } from "react-router";
@@ -77,39 +76,20 @@ const Sidebar = () => {
   };
   return (
     <aside
-      className={`absolute max-lg:min-h-screen lg:relative bg-base-100 overflow-y-auto transition-all z-[500] shadow-lg hide-scrollbar
+      className={`tm-sidebar absolute max-lg:min-h-screen lg:relative overflow-y-auto transition-all z-[500] hide-scrollbar
      ${isOpen ? "w-full md:w-64" : "w-0"}`}
     >
-      <div className="flex px-2 py-3 gap-2 items-center shadow-md">
-        <div
-          onClick={() => handleProfile()}
-          className="w-[75px] h-[75px] rounded-full ring-[2px] ring-offset-2 ring-gray-400 overflow-hidden cursor-pointer"
-        >
-          <img
-            className="w-full h-full object-contain"
-            src={image}
-            alt="Profile"
-          />
+      <div className="tm-sidebar-workspace">
+        <div className="tm-sidebar-workspace-mark" aria-hidden="true">
+          {(tenantname || "T").slice(0, 1).toUpperCase()}
         </div>
-        <div>
-          <p
-            onClick={handleProfile}
-            className="text-[14px] font-bold text-base-content cursor-pointer"
-          >
-            {username}
-          </p>
-          <p
-            onClick={handleProfile}
-            className={`cursor-pointer text-[12px] text-base-content ${
-              tenantname ? "mt-2" : ""
-            }`}
-          >
-            {tenantname}
-          </p>
+        <div className="min-w-0">
+          <p className="tm-sidebar-kicker">Workspace</p>
+          <p className="tm-sidebar-workspace-name">{tenantname || "Techmonium"}</p>
         </div>
       </div>
       <nav
-        className="op-menu op-menu-sm"
+        className="tm-sidebar-nav op-menu op-menu-sm"
         aria-label="techmoniumsign sidebar navigation"
       >
         <ul
@@ -137,9 +117,14 @@ const Sidebar = () => {
           )}
         </ul>
       </nav>
-        <footer className="my-3 flex justify-center items-center text-[25px] text-base-content gap-3">
-          <SocialMedia />
-        </footer>
+      <button className="tm-sidebar-account" onClick={handleProfile}>
+        <img src={image} alt="" />
+        <span>
+          <strong>{username}</strong>
+          <small>View profile</small>
+        </span>
+        <i className="fa-light fa-arrow-up-right" aria-hidden="true" />
+      </button>
     </aside>
   );
 };
