@@ -34,4 +34,8 @@ The prior Legal containers and data are intentionally retained. The host also ke
 
 Back up both named volumes. A release is not considered recoverable until a MongoDB restore and an uploaded-file restore have both been tested.
 
-Outbound email is intentionally disabled until verified SMTP credentials are added. The application can still create documents and share signing links, but invitation delivery should not be represented as configured while `SMTP_ENABLE=false`.
+Outbound email uses authenticated SMTP configured only in `/opt/techmoniumsign/.env`. The production sender domain must remain verified with the provider. Never commit the SMTP password or copy it into browser configuration.
+
+## Global templates
+
+The global starter library is seeded by the `20260821010000-add_global_template_library.cjs` migration. It is read-only and visible to every authenticated workspace; using a global template creates a normal tenant-owned document. See [GLOBAL_TEMPLATES.md](GLOBAL_TEMPLATES.md) for the catalog and regeneration workflow.
